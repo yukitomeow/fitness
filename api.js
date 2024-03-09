@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = "http://localhost:8000/api"
-const API_AUTH_URL = "http://localhost:8000/dj-rest-auth/"
+const API_AUTH_URL = "http://localhost:8000/dj-rest-auth"
 const accessToken = localStorage.setItem('accessToken', "6e2778eed4e987f06eb83f7f70fde5e56710781a");
 
 export const GetMeal = async (id) => { //GET Req

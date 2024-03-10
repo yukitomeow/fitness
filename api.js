@@ -1,8 +1,40 @@
+
+
 import axios from 'axios';
+import { saveToStorage, getFromStorage } from "./src/utils/localStorage"
 
 const API_URL = "http://localhost:8000/api"
 const API_AUTH_URL = "http://localhost:8000/dj-rest-auth"
-const accessToken = localStorage.setItem('accessToken', "6e2778eed4e987f06eb83f7f70fde5e56710781a");
+
+console.log("window is ", window)
+console.log("localstrage is ", localStorage)
+//
+// if (typeof window !== 'undefined') {
+//     // Perform localStorage action
+//     //const item = localStorage.getItem('key')
+//     const accessToken = localStorage.setItem("name", "123");
+//     console.log("accessToken is ", accessToken)
+// }
+
+
+// export const saveToStorage = (key, value) => {
+//     if (typeof window !== 'undefined') {
+//         return window.localStorage.setItem(key, value);
+//     }
+// }
+
+// get from storage
+// export const getFromStorage = (key) => {
+//     if (typeof window !== 'undefined') {
+//         return window.localStorage.getItem(key);
+//     }
+// }
+
+// export const removeFromStorage = (key) => {
+//     if (typeof window !== 'undefined') {
+//         return window.localStorage.removeItem(key);
+//     }
+// }
 
 export const GetMeal = async (id) => { //GET Req
     try {
@@ -44,6 +76,7 @@ export const GetAllUsers = async () => { //GET Req
             }
         }
         const response = await axios.get(`${API_URL}/users/`, options);
+        saveToStorage("meow","1234")
         return response;
     } catch (error) {
         console.log(error);

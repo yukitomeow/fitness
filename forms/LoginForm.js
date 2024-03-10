@@ -1,11 +1,11 @@
 "use client"
 
 import React from 'react';
-import form from "./RegistrationFormManager";
+import form from "./LoginFormManager";
 import { observer } from "mobx-react";
 import { Login } from "../api"
 
-const RegistrationForm = observer(() => {
+const LoginForm = observer(() => {
     const onSuccess = (form) => {
 
         const values = form.values();
@@ -67,4 +67,4 @@ const RegistrationForm = observer(() => {
     )
 });
 
-export default RegistrationForm;
+export default LoginForm;

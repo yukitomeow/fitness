@@ -65,3 +65,17 @@ export const Register = async (username, email, password1, password2) => {
         throw error;
     }
 }
+
+export const Login = async (username, email, password) => {
+    try {
+        const response = await axios.post(`${API_AUTH_URL}/login/`, {
+            'username': username,
+            'email': email,
+            'password': password
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

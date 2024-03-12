@@ -40,45 +40,91 @@ const RegistrationForm = observer(() => {
     }
 
     return (
-        <form noValidate onSubmit={handleSubmit} action="#" method="POST">
-            <div>
-                <label htmlFor={form.$('username').id}>
-                    {form.$('username').label}
-                </label>
-                <input {...form.$('username').bind()} />
-                <p>{form.$('username').error}</p>
-            </div>
 
-            <div>
-                <label htmlFor={form.$('email').id}>
-                    {form.$('email').label}
-                </label>
-                <input {...form.$('email').bind()} />
-                <p>{form.$('email').error}</p>
-            </div>
+        <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+            <Row>
+                <Col md={6} lg={4} style={{width:"100%"}}>
+                    <FormCard
+                        isLogin={false}
+                    > 
 
-            <div>
-                <label htmlFor={form.$('password').id}>
-                    {form.$('password').label}
-                </label>
-                <input {...form.$('password').bind()} />
-                <p>{form.$('password').error}</p>
-            </div>
+                        <Form noValidate onSubmit={handleSubmit} action="#" method="POST">
+                            <Form.Group className="mb-3">
+                                <Form.Label htmlFor={form.$('username').id}>
+                                    {form.$('username').label}
+                                </Form.Label>
+                                <Form.Control {...form.$('username').bind()} />
+                                <p>{form.$('username').error}</p>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label htmlFor={form.$('email').id}>
+                                    {form.$('email').label}
+                                </Form.Label>
+                                <Form.Control {...form.$('email').bind()} />
+                                <p>{form.$('email').error}</p>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label htmlFor={form.$('password').id}>
+                                    {form.$('password').label}
+                                </Form.Label>
+                                <Form.Control {...form.$('password').bind()} />
+                                <p>{form.$('password').error}</p>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label htmlFor={form.$('passwordConfirm').id}>
+                                    {form.$('passwordConfirm').label}
+                                </Form.Label>
+                                <Form.Control {...form.$('passwordConfirm').bind()} />
+                                <p>{form.$('passwordConfirm').error}</p>
+                            </Form.Group>
 
-            <div>
-                <label htmlFor={form.$('passwordConfirm').id}>
-                    {form.$('passwordConfirm').label}
-                </label>
-                <input {...form.$('passwordConfirm').bind()} />
-                <p>{form.$('passwordConfirm').error}</p>
-            </div>
+                            <Button type="submit" onClick={handleSubmit}>Submit</Button>
+                            <Button type="button" onClick={form.onClear}>Clear</Button>
+                            <Button type="button" onClick={form.onReset}>Reset</Button>
+                        </Form>
+                    </FormCard>
+                </Col>
+            </Row>
+        </Container>
+        // <form noValidate onSubmit={handleSubmit} action="#" method="POST">
+        //     <div>
+        //         <label htmlFor={form.$('username').id}>
+        //             {form.$('username').label}
+        //         </label>
+        //         <input {...form.$('username').bind()} />
+        //         <p>{form.$('username').error}</p>
+        //     </div>
 
-            <button type="submit" onClick={handleSubmit}>Submit</button>
-            <button type="button" onClick={form.onClear}>Clear</button>
-            <button type="button" onClick={form.onReset}>Reset</button>
+        //     <div>
+        //         <label htmlFor={form.$('email').id}>
+        //             {form.$('email').label}
+        //         </label>
+        //         <input {...form.$('email').bind()} />
+        //         <p>{form.$('email').error}</p>
+        //     </div>
 
-            <p>{form.error}</p>
-        </form>
+        //     <div>
+        //         <label htmlFor={form.$('password').id}>
+        //             {form.$('password').label}
+        //         </label>
+        //         <input {...form.$('password').bind()} />
+        //         <p>{form.$('password').error}</p>
+        //     </div>
+
+        //     <div>
+        //         <label htmlFor={form.$('passwordConfirm').id}>
+        //             {form.$('passwordConfirm').label}
+        //         </label>
+        //         <input {...form.$('passwordConfirm').bind()} />
+        //         <p>{form.$('passwordConfirm').error}</p>
+        //     </div>
+
+        //     <button type="submit" onClick={handleSubmit}>Submit</button>
+        //     <button type="button" onClick={form.onClear}>Clear</button>
+        //     <button type="button" onClick={form.onReset}>Reset</button>
+
+        //     <p>{form.error}</p>
+        // </form>
     )
 });
 

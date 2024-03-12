@@ -6,8 +6,6 @@ import { saveToStorage, getFromStorage } from "./src/utils/localStorage"
 const API_URL = "http://localhost:8000/api"
 const API_AUTH_URL = "http://localhost:8000/dj-rest-auth"
 
-console.log("window is ", window)
-console.log("localstrage is ", localStorage)
 //
 // if (typeof window !== 'undefined') {
 //     // Perform localStorage action

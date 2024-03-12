@@ -8,8 +8,8 @@ const FormCard = ({ title, linkPath, linkText, children }) => {
             <Card.Header>
                 {title}
                 {linkPath && linkText && (
-                    <Link href={linkPath}>
-                        <a className="float-right">{linkText}</a>
+                    <Link href={linkPath} className="float-right">
+                      {linkText}
                     </Link>
                 )}
             </Card.Header>

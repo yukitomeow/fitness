@@ -3,9 +3,17 @@
 import React from 'react';
 import form from "./RegistrationFormManager";
 import { observer } from "mobx-react";
-import { Register } from "../api"
+import { Register } from "../api";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import FormCard from '../src/components/FormCard';
+import { useRouter } from "next/navigation";
 
 const RegistrationForm = observer(() => {
+    const router = useRouter();
     const onSuccess = (form) => {
 
         const values = form.values();

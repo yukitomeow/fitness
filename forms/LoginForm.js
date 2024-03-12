@@ -47,7 +47,7 @@ const LoginForm = observer(() => {
                 <Col md={6} lg={4} style={{width:"100%"}}>
                     <FormCard
                         title="Login"
-                        linkPath="/register" // the path to your registration page
+                        linkPath="/registration" // the path to your registration page
                         linkText="Sign Up" // the text for the link
                     > 
 

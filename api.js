@@ -82,6 +82,22 @@ export const GetAllUsers = async () => { //GET Req
     }
 }
 
+export const GetUserInfo = async () => { //GET Req
+    try {
+        const accessToken = localStorage.getItem('accessToken');
+        const options = {
+            headers: {
+                Authorization: `Token ${accessToken}`
+            }
+        }
+        const response = await axios.get(`${API_AUTH_URL}/user/`, options);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export const Register = async (username, email, password1, password2) => {
     try {
         const response = await axios.post(`${API_AUTH_URL}/registration/`, {
@@ -107,6 +123,19 @@ export const Login = async (username, email, password) => {
         return response.data;
     } catch (error) {
         console.log(error);
+        throw error;
+    }
+}
+
+export const Logout = async () => {
+    try {
+        // No need to send body data for logout, but ensure authentication details are included in headers if needed
+        const response = await axios.post(`${API_AUTH_URL}/logout/`);
+        // Assuming the server clears the session or token and sends back a successful response
+        console.log('Logout successful:', response.data);
+        return response.data;
+    } catch (error) {
+        console.log('Logout error:', error);
         throw error;
     }
 }

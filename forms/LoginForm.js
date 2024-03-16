@@ -11,22 +11,44 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormCard from '../src/components/FormCard'; 
 import { useRouter } from "next/navigation";
+import { saveToStorage } from '@/utils/localStorage';
+import { GetUserInfo } from "../api";
+import userStore from "../stores/userStore";
+//import catStore from '../stores/catStore';
 
 
 const LoginForm = observer(() => {
     const router = useRouter();
-    const onSuccess = (form) => {
+    const onSuccess = async (form) => {
 
         const values = form.values();
-        Login(values.username, values.email, values.password).then(response => {
-            console.log(response);
+        try {
+            const response = await Login(values.username, values.email, values.password);
+            console.log(response)
+            saveToStorage('accessToken', response.key);
+            const user = await GetUserInfo()
+            console.log("user is ", user)
+            userStore.authenticate(user)
             router.push('/'); 
-        }).catch(error => {
-            console.log(error);
-        });
-        console.log('onSuccess');
+    
+        } catch (error) {
+            console.log(error)
+        }
+            //Login(values.username, values.email, values.password).then(response => {
+            //     console.log(response);//login token
+            //     saveToStorage('accessToken', response.key);
+            //     GetUserInfo()
+            // }).then(response=>{
+            //     console.log("Authentication complete",response)
+            //     router.push('/'); 
+            // })     
+            
+            // .catch(error => {
+            //     console.log(error);
+            // });
+            // console.log('onSuccess');
 
-        form.clear()
+            form.clear()
     }
 
     const onError = (form) => {
@@ -75,6 +97,7 @@ const LoginForm = observer(() => {
                             <Button type="submit" onClick={handleSubmit}>Submit</Button>
                             <Button type="button" onClick={form.onClear}>Clear</Button>
                             <Button type="button" onClick={form.onReset}>Reset</Button>
+                            
                         </Form>
                     </FormCard>
                 </Col>

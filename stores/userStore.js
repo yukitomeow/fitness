@@ -13,19 +13,9 @@ class UserStore {
     last_name=""
     authenticated=false
     constructor() {
-        makePersistable(this, {
-            name: 'UserStore',
-            properties: [
-                'id',
-                'username',
-                'email',
-                'first_name',
-                'last_name',
-                'authenticated'
-            ],
-            storage: window.localStorage,
-            debugMode: true,
-        });
+
+
+        
         makeObservable(this, {
             id:observable,
             username: observable,
@@ -36,6 +26,23 @@ class UserStore {
             authenticate: action,
             logout:action
         });
+    }
+    async initPersistence() {
+        if (typeof window !== 'undefined') {
+            await makePersistable(this, {
+                name: 'UserStore',
+                properties: [
+                    'id',
+                    'username',
+                    'email',
+                    'first_name',
+                    'last_name',
+                    'authenticated',
+                ],
+                storage: window.localStorage,
+                debugMode: true,
+            });
+        }
     }
     authenticate(user) { //action function
         console.log("user.username is",user.username)
@@ -57,9 +64,10 @@ class UserStore {
         this.authenticated = false;
 
         // Clear storage (e.g., access token)
-        localStorage.removeItem('accessToken');
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('accessToken');
+        }
 
-        // Add any additional cleanup logic here
     }
 
     

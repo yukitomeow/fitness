@@ -2,9 +2,11 @@
 
 import React, {useState, useEffect, useRef} from 'react';
 import { GetAllUsers } from '../../api';
+import { useRouter } from 'next/navigation';
+import  userStore  from '../../stores/userStore';
 
 
-const YourPage =  () => {
+const HomePage =  () => {
   // const [user, setUser] = useState([]);
   // const [loading, setLoading] = useState(true);
   // const isMountedRef = useRef(false);
@@ -37,19 +39,23 @@ const YourPage =  () => {
   //   return () => {
   //     console.log('unmounted')
   //   };
-  // }, []); // Empty dependency array
+  // }, []); // Empty dependency array\
+  const router = useRouter();
+  console.log("router is ", router)
+; // Destructure to get your UserStore
+
+  useEffect(() => {
+
+    if (!userStore.authenticated) {
+    router.push('/login');
+  }
+}, [userStore, router]);
+
+return <div>Welcome to the homepage!</div>;}
   
  
  
 
-  return (
-  
-      <div>
-        hello
-      
-      </div>
-  
-  );
-};
 
-export default YourPage;
+
+export default HomePage;

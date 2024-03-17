@@ -95,8 +95,8 @@ const LoginForm = observer(() => {
                             </Form.Group>
 
                             <Button type="submit" onClick={handleSubmit}>Submit</Button>
-                            <Button type="button" onClick={form.onClear}>Clear</Button>
-                            <Button type="button" onClick={form.onReset}>Reset</Button>
+                            {/* <Button type="button" onClick={form.onClear}>Clear</Button>
+                            <Button type="button" onClick={form.onReset}>Reset</Button> */}
                             
                         </Form>
                     </FormCard>

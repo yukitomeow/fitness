@@ -51,7 +51,12 @@ const HomePage =  () => {
   }
 }, [userStore, router]);
 
-return <div>Welcome to the homepage!</div>;}
+  return <div style={{ backgroundColor: 'beige', height: '100vh', width: '100vw' }}>
+    Welcome to the homepage!
+  </div>
+
+
+}
   
  
  

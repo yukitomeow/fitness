@@ -127,6 +127,28 @@ export const Login = async (username, email, password) => {
     }
 }
 
+export const CreateMeal = async (user, meal_type, hungry_when_eating, stop_eating_not_hungry) => {
+    try {
+        const accessToken = localStorage.getItem('accessToken');
+        const options = {
+            headers: {
+                Authorization: `Token ${accessToken}`
+            }
+        }
+        const response = await axios.post(`${API_URL}/meal/`, {
+            'user': user,
+            'meal_type': meal_type,
+            'hungry_when_eating': hungry_when_eating,
+            "stop_eating_not_hungry": stop_eating_not_hungry,
+            "foods":[],
+        },options);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export const Logout = async () => {
     try {
         // No need to send body data for logout, but ensure authentication details are included in headers if needed

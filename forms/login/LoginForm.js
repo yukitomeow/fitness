@@ -1,30 +1,54 @@
 "use client"
 
 import React from 'react';
-import form from "./RegistrationFormManager";
+import form from "./LoginFormManager";
 import { observer } from "mobx-react";
-import { Register } from "../api";
+import { Login } from "../../api"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FormCard from '../src/components/FormCard';
+import FormCard from '../../src/components/FormCard'; 
 import { useRouter } from "next/navigation";
+import { saveToStorage } from '@/utils/localStorage';
+import { GetUserInfo } from "../../api";
+import userStore from "../../stores/userStore";
+//import catStore from '../stores/catStore';
 
-const RegistrationForm = observer(() => {
+
+const LoginForm = observer(() => {
     const router = useRouter();
-    const onSuccess = (form) => {
+    const onSuccess = async (form) => {
 
         const values = form.values();
-        Register(values.username, values.email, values.password, values.passwordConfirm).then(response => {
-            console.log(response);
-        }).catch(error => {
-            console.log(error);
-        });
-        console.log('onSuccess');
+        try {
+            const response = await Login(values.username, values.email, values.password);
+            console.log(response)
+            saveToStorage('accessToken', response.key);
+            const user = await GetUserInfo()
+            console.log("user is ", user)
+            userStore.authenticate(user)
+            router.push('/'); 
+    
+        } catch (error) {
+            console.log(error)
+        }
+            //Login(values.username, values.email, values.password).then(response => {
+            //     console.log(response);//login token
+            //     saveToStorage('accessToken', response.key);
+            //     GetUserInfo()
+            // }).then(response=>{
+            //     console.log("Authentication complete",response)
+            //     router.push('/'); 
+            // })     
+            
+            // .catch(error => {
+            //     console.log(error);
+            // });
+            // console.log('onSuccess');
 
-        form.clear()
+            form.clear()
     }
 
     const onError = (form) => {
@@ -40,12 +64,11 @@ const RegistrationForm = observer(() => {
     }
 
     return (
-
         <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
             <Row>
                 <Col md={6} lg={4} style={{width:"100%"}}>
                     <FormCard
-                        isLogin={false}
+                isLogin={true}
                     > 
 
                         <Form noValidate onSubmit={handleSubmit} action="#" method="POST">
@@ -70,62 +93,18 @@ const RegistrationForm = observer(() => {
                                 <Form.Control {...form.$('password').bind()} />
                                 <p>{form.$('password').error}</p>
                             </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label htmlFor={form.$('passwordConfirm').id}>
-                                    {form.$('passwordConfirm').label}
-                                </Form.Label>
-                                <Form.Control {...form.$('passwordConfirm').bind()} />
-                                <p>{form.$('passwordConfirm').error}</p>
-                            </Form.Group>
 
                             <Button type="submit" onClick={handleSubmit}>Submit</Button>
                             {/* <Button type="button" onClick={form.onClear}>Clear</Button>
                             <Button type="button" onClick={form.onReset}>Reset</Button> */}
+                            
                         </Form>
                     </FormCard>
                 </Col>
             </Row>
         </Container>
-        // <form noValidate onSubmit={handleSubmit} action="#" method="POST">
-        //     <div>
-        //         <label htmlFor={form.$('username').id}>
-        //             {form.$('username').label}
-        //         </label>
-        //         <input {...form.$('username').bind()} />
-        //         <p>{form.$('username').error}</p>
-        //     </div>
 
-        //     <div>
-        //         <label htmlFor={form.$('email').id}>
-        //             {form.$('email').label}
-        //         </label>
-        //         <input {...form.$('email').bind()} />
-        //         <p>{form.$('email').error}</p>
-        //     </div>
 
-        //     <div>
-        //         <label htmlFor={form.$('password').id}>
-        //             {form.$('password').label}
-        //         </label>
-        //         <input {...form.$('password').bind()} />
-        //         <p>{form.$('password').error}</p>
-        //     </div>
+)});
 
-        //     <div>
-        //         <label htmlFor={form.$('passwordConfirm').id}>
-        //             {form.$('passwordConfirm').label}
-        //         </label>
-        //         <input {...form.$('passwordConfirm').bind()} />
-        //         <p>{form.$('passwordConfirm').error}</p>
-        //     </div>
-
-        //     <button type="submit" onClick={handleSubmit}>Submit</button>
-        //     <button type="button" onClick={form.onClear}>Clear</button>
-        //     <button type="button" onClick={form.onReset}>Reset</button>
-
-        //     <p>{form.error}</p>
-        // </form>
-    )
-});
-
-export default RegistrationForm;
+export default LoginForm;

@@ -1,0 +1,36 @@
+// // custom.scss
+
+// // Import Bootstrap functions (needed to manipulate maps)
+// @import "node_modules/bootstrap/scss/functions";
+
+// // Override the default grid breakpoints
+// $grid-breakpoints: map-merge(
+//   $grid-breakpoints,
+//   (
+//     md: 768px, // Change this to your desired breakpoint for 'md'
+//   )
+// );
+
+// // After defining your custom breakpoints, import Bootstrap
+// @import "node_modules/bootstrap/scss/bootstrap";
+
+// styles/custom.scss
+
+// Import bootstrap functions, variables, and mixins
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+// Override the default grid breakpoints
+$grid-breakpoints: map-merge(
+  $grid-breakpoints,
+  (
+    'md': 768px, // Use your custom value for the 'md' breakpoint
+  )
+);
+
+// Optionally override other variables here
+
+// Import the rest of Bootstrap
+@import '~bootstrap/scss/bootstrap';
+

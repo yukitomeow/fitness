@@ -21,6 +21,10 @@ const RegistrationForm = observer(() => {
             console.log(response);
         }).catch(error => {
             console.log(error);
+            if (error.response.data.username){
+                form.invalidate(error.response.data.username[0]) 
+
+            }
         });
         console.log('onSuccess');
 
@@ -79,6 +83,7 @@ const RegistrationForm = observer(() => {
                             </Form.Group>
 
                             <Button type="submit" onClick={handleSubmit}>Submit</Button>
+                            <p>{form.error}</p>
                             {/* <Button type="button" onClick={form.onClear}>Clear</Button>
                             <Button type="button" onClick={form.onReset}>Reset</Button> */}
                         </Form>

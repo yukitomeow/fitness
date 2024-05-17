@@ -1,9 +1,9 @@
 "use client"
 
-import React from 'react';
+import React,  {useState} from 'react';
 import form from "./RegistrationFormManager";
 import { observer } from "mobx-react";
-import { Register } from "../../api";
+import { Register, Login, GetUserInfo } from "../../api";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -11,24 +11,75 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormCard from '../../src/components/FormCard';
 import { useRouter } from "next/navigation";
+import { saveToStorage } from '@/utils/localStorage';
+import userStore from '../../stores/userStore';
 
 const RegistrationForm = observer(() => {
+    const [loading, setLoading]=useState(false);
     const router = useRouter();
-    const onSuccess = (form) => {
+    // const onSuccess = async (form) => {
+    //     const { username, email, password1, password2 } = form.values();
+    //     setLoading(true);
+
+    //     try {
+    //         const registerResponse = await Register(username, email, password1, password2);
+    //         const loginResponse = await Login(email, password1);
+    //         const userData = await GetUser(loginResponse.data.key);
+    //         UserStore.authenticate(userData);
+    //         setLoading(false);
+    //         form.clear();
+    //         navigate('/');
+    //     } catch (error) {
+    //         console.log('caught error')
+    //         console.log(error);
+    //         setLoading(false);
+    //         if (error.response.data['username']) {
+    //             form.select('username').invalidate(error.response.data['username'][0]);
+    //         } else if (error.response.data['email']) {
+    //             form.select('email').invalidate(error.response.data['email'][0]);
+    //         } else if (error.response.data['password1']) {
+    //             form.select('password1').invalidate(error.response.data['password1'][0]);
+    //         } else if (error.response.data['password2']) {
+    //             form.select('password2').invalidate(error.response.data['password2'][0]);
+    //         } else if (error.response.data['non_field_errors']) {
+    //             form.invalidate(error.response.data['non_field_errors'][0]);
+    //             ToastError(error.response.data['non_field_errors'][0])
+    //         } else {
+    //             ToastError("An unknown error occured.")
+    //         }
+    //     }
+    // }
+    const onSuccess = async (form) => {
 
         const { username, email, password, passwordConfirm } = form.values();
-        Register(username, email,password, passwordConfirm).then(response => {
-            console.log(response);
-        }).catch(error => {
+        try{
+            const registerResponse = await Register(username, email,password, passwordConfirm)
+            console.log("registerResponse is ", registerResponse)
+            const loginResponse = await Login(username, email, password);
+            saveToStorage('accessToken', loginResponse.key);
+            const userData = await GetUserInfo();
+            userStore.authenticate(userData)
+            form.clear();
+            router.push("/")
+            
+        } catch (error){
             console.log(error);
-            if (error.response.data.username){
-                form.invalidate(error.response.data.username[0]) 
-
+            if (error.response.data.username) {
+                form.invalidate(error.response.data.username[0])
             }
-        });
+        }
+        // Register(username, email,password, passwordConfirm).then(response => {
+        //     console.log(response);
+        // }).catch(error => {
+        //     console.log(error);
+        //     if (error.response.data.username){
+        //         form.invalidate(error.response.data.username[0]) 
+        //     }
+        // });
         console.log('onSuccess');
 
-        form.clear()
+        // form.clear()
+        //make a pop up
     }
 
     const onError = (form) => {
